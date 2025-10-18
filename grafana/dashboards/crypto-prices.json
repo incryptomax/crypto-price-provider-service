@@ -1,0 +1,128 @@
+{
+  "title": "Crypto Price Provider Metrics",
+  "tags": ["crypto", "prices", "monitoring"],
+  "timezone": "browser",
+  "schemaVersion": 16,
+  "version": 0,
+  "refresh": "10s",
+  "panels": [
+    {
+      "id": 1,
+      "title": "API Requests Per Second",
+      "type": "graph",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+      "targets": [
+        {
+          "expr": "sum(rate(api_requests_total[1m]))",
+          "legendFormat": "Total RPS"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "API Latency (p95, p99)",
+      "type": "graph",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(api_latency_seconds_bucket[5m])) by (le))",
+          "legendFormat": "p95"
+        },
+        {
+          "expr": "histogram_quantile(0.99, sum(rate(api_latency_seconds_bucket[5m])) by (le))",
+          "legendFormat": "p99"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Provider Success Rate",
+      "type": "graph",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+      "targets": [
+        {
+          "expr": "sum(rate(provider_calls_total{result=\"success\"}[5m])) by (provider) / sum(rate(provider_calls_total[5m])) by (provider)",
+          "legendFormat": "{{provider}}"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Provider Latency by Provider",
+      "type": "graph",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(provider_latency_seconds_bucket[5m])) by (provider, le))",
+          "legendFormat": "{{provider}} p95"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Outliers Detected",
+      "type": "graph",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16},
+      "targets": [
+        {
+          "expr": "sum(rate(provider_outliers_total[5m])) by (provider)",
+          "legendFormat": "{{provider}}"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Quorum Distribution",
+      "type": "piechart",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16},
+      "targets": [
+        {
+          "expr": "sum(aggregation_quorum_total) by (count)",
+          "legendFormat": "{{count}} sources"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Cache Hit Rate",
+      "type": "graph",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 24},
+      "targets": [
+        {
+          "expr": "sum(rate(cache_hits_total[5m])) by (source)",
+          "legendFormat": "{{source}}"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Error Rate",
+      "type": "graph",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 24},
+      "targets": [
+        {
+          "expr": "sum(rate(provider_calls_total{result=\"error\"}[5m])) by (provider)",
+          "legendFormat": "{{provider}}"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "Rate Limit Errors (HTTP 429)",
+      "type": "graph",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 32},
+      "targets": [
+        {
+          "expr": "sum(rate(provider_rate_limit_errors_total[5m])) by (provider)",
+          "legendFormat": "{{provider}} 429 errors/sec"
+        }
+      ],
+      "yAxes": [
+        {
+          "label": "Errors/sec",
+          "min": 0
+        }
+      ]
+    }
+  ]
+}
