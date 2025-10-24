@@ -153,7 +153,7 @@ The service uses an intelligent **hybrid approach** that combines the best of bo
 ### Core Features
 
 #### 1. **Multi-Provider Aggregation**
-- **CoinGecko**: Free API with demo key, reliable pricing
+- **CoinGecko**: Free API with reliable pricing
 - **Moralis**: Web3 data API, comprehensive token support
 - **Portals.fi**: Batch API for efficient multi-token requests
 - **1inch**: DEX aggregator API with spot price data
@@ -490,7 +490,7 @@ Access at: `http://localhost:8080/api/docs`
 // src/prices/providers/coingecko.provider.ts
 ```
 - **API**: https://api.coingecko.com/api/v3
-- **Rate Limit**: 10-50 calls/minute (demo key)
+- **Rate Limit**: 10-50 calls/minute (free tier)
 - **Our Limit**: 0.5 RPS (30 calls/min) with burst of 30 requests
 - **Configuration**: `COINGECKO_RATE_LIMIT=0.5`
 - **Features**: Reliable, comprehensive token data
@@ -693,7 +693,7 @@ sum(rate(cache_hits_total[5m])) / sum(rate(api_requests_total[5m]))
   "level": "info",
   "message": "Price fetched: WETH = $3983.77 (418ms)",
   "context": "CoingeckoProvider",
-  "service": "velvet-test",
+  "service": "crypto-price-provider-service",
   "timestamp": "2025-10-16T00:00:00.000Z"
 }
 ```
@@ -730,8 +730,8 @@ docker logs --tail 100 crypto-price-provider
 
 **1. Clone repository:**
 ```bash
-git clone https://github.com/incryptomax/velvet.git
-cd velvet
+git clone https://github.com/incryptomax/crypto-price-provider-service.git
+cd crypto-price-provider-service
 ```
 
 **2. Configure environment:**
@@ -771,7 +771,7 @@ PORT=8080
 NODE_ENV=production
 
 # Authentication (Production Keys)
-API_KEYS=prod-key-velvet-2024-001,prod-key-velvet-2024-002,prod-key-velvet-2024-003
+API_KEYS=your-api-key-1,your-api-key-2,your-api-key-3
 CORS_ORIGINS=https://yourdomain.com,https://api.yourdomain.com
 
 # Redis (Optimized)
@@ -814,7 +814,7 @@ THROTTLE_TTL=1
 THROTTLE_LIMIT=50
 
 # Provider Rate Limits (requests per second)
-# CoinGecko Demo: ~10-30 calls/min = 0.5 RPS recommended
+# CoinGecko Free: ~10-30 calls/min = 0.5 RPS recommended
 COINGECKO_RATE_LIMIT=0.5
 # Moralis Free: 40k calls/month ≈ 15 calls/min = 0.25 RPS recommended
 MORALIS_RATE_LIMIT=0.25
@@ -827,7 +827,7 @@ ONEINCH_RATE_LIMIT=5.0
 ### Production Checklist
 
 - [ ] Configure API keys for CoinGecko, Moralis, Portals.fi, 1inch, and DeFiLlama
-- [ ] Set secure `API_KEYS` (not demo keys)
+- [ ] Set secure `API_KEYS` (use strong, unique keys)
 - [ ] Enable CORS with specific origins
 - [ ] Configure log rotation
 - [ ] Set up external Redis (not Docker)
@@ -1025,7 +1025,7 @@ PROVIDERS_QUORUM=4  # Increase for more providers
 ```bash
 # 100 concurrent requests
 ab -n 100 -c 10 -p request.json -T application/json \
-   -H "x-api-key: demo-key-1" \
+   -H "x-api-key: your-api-key" \
    http://localhost:8080/api/prices
 
 # Results:
@@ -1329,13 +1329,33 @@ curl http://localhost:8080/api/healthz | jq '.providers'
 
 ## 📄 License
 
-This project is part of a technical assessment and is provided as-is for evaluation purposes.
+MIT License
+
+Copyright (c) 2025 incryptomax
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 ---
 
 ## Contributing
 
-This is a demonstration project for a technical assessment. For questions or feedback, please contact the repository owner.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ---
 
@@ -1351,5 +1371,5 @@ For issues or questions:
 
 **Last Updated:** October 16, 2025  
 **Version:** 1.0.0  
-**Author:** Technical Assessment Project
+**Author:** incryptomax
 

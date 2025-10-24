@@ -116,11 +116,11 @@ Production-ready backend service for aggregating cryptocurrency prices from mult
 - ✅ **Metrics**: Full Prometheus integration with custom metrics
 
 ### API Compliance
-- ✅ **Spec-Compliant Response**: Exact match with problem statement requirements
+- ✅ **Spec-Compliant Response**: Follows industry standards for price aggregation APIs
 - ✅ **Error Handling**: Failed tokens return detailed error messages
 - ✅ **Multi-Chain Support**: Ethereum, BSC, Polygon, Avalanche, Fantom, Arbitrum, Optimism, Base
-- ✅ **Docker Optimization**: Removed obsolete version field, cleaner compose file
-- ✅ **Git Hygiene**: Updated .gitignore to exclude compiled test files
+- ✅ **Docker Optimization**: Clean and optimized container setup
+- ✅ **Git Hygiene**: Proper .gitignore configuration
 
 ## Quick Start
 
@@ -134,8 +134,8 @@ Production-ready backend service for aggregating cryptocurrency prices from mult
 
 ```bash
 # Clone repository
-git clone <repository-url>
-cd velvet-test
+git clone https://github.com/incryptomax/crypto-price-provider-service.git
+cd crypto-price-provider-service
 
 # Install dependencies
 npm install
@@ -189,7 +189,7 @@ All requests require an API key in the `x-api-key` header:
 
 ```bash
 curl -X POST http://localhost:8080/api/prices \
-  -H "x-api-key: demo-key-1" \
+  -H "x-api-key: your-api-key" \
   -H "Content-Type: application/json" \
   -d '{
     "tokens": [
@@ -312,7 +312,7 @@ Key environment variables:
 ```bash
 # Application (Production Ready)
 PORT=8080
-API_KEYS=prod-key-velvet-2024-001,prod-key-velvet-2024-002,prod-key-velvet-2024-003
+API_KEYS=your-api-key-1,your-api-key-2,your-api-key-3
 NODE_ENV=production
 CORS_ORIGINS=https://yourdomain.com,https://api.yourdomain.com
 
@@ -596,7 +596,27 @@ curl http://localhost:8080/api/healthz | jq
 
 ## License
 
-UNLICENSED
+MIT License
+
+Copyright (c) 2025 incryptomax
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 ## Support
 
